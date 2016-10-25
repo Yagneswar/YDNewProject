@@ -2,15 +2,17 @@ package com.niit.Backend.DAO;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.niit.Backend.Model.Product;
+import com.niit.Model.Product;
 
-@Repository("productDAO")
 
+  
+   @Transactional
 	public class ProductDAOImpl implements ProductDAO{
 
 		
@@ -19,20 +21,20 @@ import com.niit.Backend.Model.Product;
 		
 
 		@Override
-		@Transactional
+		
 		public List<Product> getAll() {				
 			return sessionFactory.getCurrentSession().createQuery("FROM Product").list();
 		}
 
 		@Override
-		@Transactional
+		
 		public void insert(Product p) {
 			sessionFactory.getCurrentSession().persist(p);
 			
 		}
 
 		@Override
-		@Transactional
+		
 		public void update(Product p) {
 			
 			sessionFactory.getCurrentSession().update(p);
@@ -40,7 +42,7 @@ import com.niit.Backend.Model.Product;
 		}
 
 		@Override
-		@Transactional
+		
 		public void delete(int id) {
 		
 			 sessionFactory.getCurrentSession().delete(getProduct(id));
@@ -48,7 +50,7 @@ import com.niit.Backend.Model.Product;
 
 		
 		@Override
-		@Transactional
+		
 		public Product getProduct(int id) {
 			return sessionFactory.getCurrentSession().get(Product.class, id);
 		}
