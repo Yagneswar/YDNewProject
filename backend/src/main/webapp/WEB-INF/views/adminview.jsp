@@ -48,8 +48,8 @@
 						</tr>
 						
 						<tr align="center">
-							<td align="center"><input type="submit" value="Save" /></td>
-							<td align="center"><input type="reset" value="Reset" /></td>
+							<td align="center"><input type="submit" value="Save" class="btn btn-sm btn-primary" /></td>
+							<td align="center"><input type="reset" value="Reset" class="btn btn-sm btn-primary" /></td>
 						</tr>
 					</table>
 		</form:form>

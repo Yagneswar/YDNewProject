@@ -11,8 +11,9 @@ http://www.springframework.org/schema/context/spring-context.xsd
 http://www.springframework.org/schema/tx 
 http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-	<!-- Adding for autowire driven -->
-	<context:annotation-config />
+
+	<context:annotation-config/>
+
 	<!-- Adding the dbcp2 datasource -->
 
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
@@ -26,7 +27,7 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
 	<bean id="session"
 		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="packagesToScan" value="com.niit" />
+		<property name="packagesToScan" value="com.niit.Model" />
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
@@ -46,6 +47,11 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
 	<!-- dto related beans -->
 	<bean id="productDAO" class="com.niit.Backend.DAO.ProductDAOImpl" />
     <bean id="categoryDAO" class="com.niit.Backend.DAO.CategoryDAOImpl" />    
-    <bean id="r" class="com.niit.Backend.DAO.UserDAOImpl" />
-    <bean id="cartdet" class="com.niit.Backend.DAO.CartDAOImpl" />
+    <bean id="userDAO" class="com.niit.Backend.DAO.UserDAOImpl" />
+    
+    <bean id="CartDAO" class="com.niit.Backend.DAO.CartDAOImpl" />
+<bean id="CartItemDAO" class="com.niit.Backend.DAO.CartItemDAOImpl" />
+<bean id="CustomerOrderDAO" class="com.niit.Backend.DAO.CustomerOrderDAOImpl"/>
+    
+    
 </beans>

@@ -1,4 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
+ <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -49,12 +51,26 @@
                    <li><a href="<c:url value="/"/>">Home</a></li>
 			<li><a href="<c:url value="/aboutus"/>">About US</a></li>
 			<li><a href="<c:url value="/contactus"/>">Contact US</a></li>
-
+			
             <li><a href="<c:url value="/reg"/>">Register</a></li>
+              
+              
+              			            <sec:authorize access="isAuthenticated()">
+              
 			<li><a href="<c:url value="/login"/>">Login</a></li>
+			</sec:authorize>
 			<li><a href="<c:url value="/viewdetails"/>">View All</a></li>
+		      
+		    <sec:authorize access="hasRole('ROLE_ADMIN')">
+		     	
 			<li><a href="<c:url value="admin/product"/>">Admin</a></li>
-			<li><a href="<c:url value="/cart"/>">CheckOut</a></li>
+						
+			</sec:authorize>
+			<li><a href="<c:url value="/cart"/>">Cart</a></li>
+			
+			            <sec:authorize access="isAuthenticated()">
+						<li><a href="<c:url value="/logout"/>">LogOut</a></li>
+			             </sec:authorize>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

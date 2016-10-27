@@ -1,6 +1,6 @@
 package com.niit.Backend.DAO;
 
-import java.util.List;
+import java.io.IOException;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,39 +14,45 @@ import com.niit.Model.Cart;
 public class CartDAOImpl implements CartDAO {
 
 	@Autowired
-	private SessionFactory sessionFactory;
-	
+	private SessionFactory session;
+
+	@Autowired
+	CustomerOrderDAO order;
+
+	@SuppressWarnings({ "unchecked", "deprecation" })
+
 	@Override
-	public List<Cart> getAll() {
-		
-		return sessionFactory.getCurrentSession().createQuery("from Cart").list();
+	public Cart getCartById(int cartId) {
+		// TODO Auto-generated method stub
+		Cart p = session.getCurrentSession().get(Cart.class, new Integer(cartId));
+		// Product p = (Product) session1.load(Product.class, new Integer(id));
+
+		return p;
 	}
 
 	@Override
-	public void insert(Cart c) {
-		
-		sessionFactory.getCurrentSession().persist(c);
+	public Cart validate(int cartId) throws IOException {
+
+		Cart cart = getCartById(cartId);
+		if (cart == null || cart.getCartItems().size() == 0) {
+			throw new IOException(cartId + "");
+		}
+
+		update(cart);
+		return cart;
 
 	}
 
 	@Override
-	public Cart get(int cid) {
-		
-		return sessionFactory.getCurrentSession().get(Cart.class, cid);
-	}
+	public void update(Cart cart) {
 
-	@Override
-	public void update(Cart c) {
-		
-		sessionFactory.getCurrentSession().update(c);
+		int cartId = cart.getCartId();
+		double grandTotal = order.getCustomerOrderGrandTotal(cartId);
+		cart.setGrandTotal(grandTotal);
 
-	}
-
-	@Override
-	public void delete(int cid) {
-		
-		sessionFactory.getCurrentSession().remove(get(cid));
+		session.getCurrentSession().saveOrUpdate(cart);
 
 	}
 
 }
+

@@ -14,6 +14,11 @@ public interface ProductDAO {
     public void delete(int id);
 	
    public Product getProduct(int id);
+   
+   public Product getProductByPrice(int productPrice);
+	public Product getProductByBand(int productPrice);
+	public List<Product> getProductByCategory(String Category);
+   
 		
 }
 

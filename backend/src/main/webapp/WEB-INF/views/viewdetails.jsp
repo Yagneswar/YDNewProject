@@ -48,7 +48,7 @@
 				class="btn btn-info" role="button">View</a></td>	
 
 <!-- <td><a ng-href="/backend/displayallproduct/{{x.id}}" class="btn btn-info" role="button">View</a></td>
- --><td> <a ng-href="/backend/memberShip" class="btn btn-info" role="button">Add to cart</a></td>
+ --><td> <a ng-href="/backend/cart" class="btn btn-info" role="button">Add to cart</a></td>
 </tr>
 </table>
 </div>

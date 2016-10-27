@@ -55,20 +55,13 @@
                     </div>
                   </div>
                   <div class="form-group">
-              <input type="submit"  value="REGISTER">
+              <input type="submit"  value="REGISTER" class="btn btn-sm btn-primary">
                   </div>
                 
                 </form:form>
 
                 <footer role="signup" class="text-center">
-                  <ul>
-                    <li>
-                      <a href="#">Terms of Use</a>
-                    </li>
-                    <li>
-                      <a href="#">Privacy Statement</a>
-                    </li>
-                  </ul>
+                  
                 </footer>
 
               </article>

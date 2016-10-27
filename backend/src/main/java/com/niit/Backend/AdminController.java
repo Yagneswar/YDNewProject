@@ -25,11 +25,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.niit.Backend.DAO.ProductDAO;
 import com.niit.Model.Product;
 
-
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-	
+
 	@Autowired
 	ProductDAO pDAO;
 
@@ -40,15 +39,15 @@ public class AdminController {
 		mv.addObject("products", pDAO.getAll());
 		return mv;
 	}
-	
 
 	@RequestMapping(value = "/pro")
-	public @ResponseBody List<Product> getAllProducts() {
-		
+	@ResponseBody
+	public List<Product> getAllProducts() {
+
 		return pDAO.getAll();
-		
+
 	}
-	
+
 	@RequestMapping(value = "/singlepro/{id}", method = RequestMethod.GET)
 	public ModelAndView getoneProduct(@PathVariable("id") int id) {
 		ModelAndView mv = new ModelAndView("singlepro");
@@ -56,40 +55,34 @@ public class AdminController {
 		return mv;
 	}
 
-	
-	
-	
 	@RequestMapping(value = "/delete/{id}")
 	public String adminDelete(@PathVariable("id") Integer rt) {
 		pDAO.delete(rt);
 		return "redirect:/admin/product";
 	}
-	
+
 	@RequestMapping(value = "/edit/{id}")
 	public ModelAndView adminEdit(@PathVariable("id") int rt) {
-		ModelAndView mv=new ModelAndView("adminview");
-		mv.addObject("product",pDAO.getProduct(rt));
-		mv.addObject("products",pDAO.getAll());
-		
+		ModelAndView mv = new ModelAndView("adminview");
+		mv.addObject("product", pDAO.getProduct(rt));
+		mv.addObject("products", pDAO.getAll());
+
 		return mv;
 	}
 
-	
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
-	public String adminSave(@Valid @ModelAttribute("product") Product product, BindingResult results,HttpServletRequest request, Model model) 
-	{
-		if(results.hasErrors())
-		{
+	public String adminSave(@Valid @ModelAttribute("product") Product product, BindingResult results,
+			HttpServletRequest request, Model model) {
+		if (results.hasErrors()) {
 			model.addAttribute("product", product);
-			model.addAttribute("products",pDAO.getAll());
+			model.addAttribute("products", pDAO.getAll());
 			return "adminview";
 		}
-			
-if (product.getId() == 0) {
-			
+
+		if (product.getId() == 0) {
+
 			pDAO.insert(product);
-			
-			
+
 			// ................................... multi part starts
 			// here....................
 
@@ -98,46 +91,45 @@ if (product.getId() == 0) {
 			MultipartFile productImage = product.getFile();
 
 			// only if file exist upload the image
-			if(productImage!=null && productImage.getSize() > 0) {
-					// first get the root directory and then append the directory where
-					// you want to store
-					String rootPath = request.getSession().getServletContext().getRealPath("/");
-					String directoryPath = rootPath + "resources\\images\\product";
-					
-					// append the file name
-					String filePath = directoryPath + File.separator + product.getId() + ".jpg";
-	
-					// ========================================================
-					// If directory does not exist create the directory
-					if (!Files.exists(Paths.get(directoryPath))) {
-						try {
-							// create the directories recursively
-							Files.createDirectories(Paths.get(directoryPath));
-						}
-	
-						catch (IOException ex) {
-							ex.printStackTrace();
-						}
-					}
-					// =======================================================
-					// transfer the file
-	
+			if (productImage != null && productImage.getSize() > 0) {
+				// first get the root directory and then append the directory
+				// where
+				// you want to store
+				String rootPath = request.getSession().getServletContext().getRealPath("/");
+				String directoryPath = rootPath + "resources\\images\\product";
+
+				// append the file name
+				String filePath = directoryPath + File.separator + product.getId() + ".jpg";
+
+				// ========================================================
+				// If directory does not exist create the directory
+				if (!Files.exists(Paths.get(directoryPath))) {
 					try {
-						productImage.transferTo(new File(filePath));
-					} catch (Exception ex) {
+						// create the directories recursively
+						Files.createDirectories(Paths.get(directoryPath));
+					}
+
+					catch (IOException ex) {
 						ex.printStackTrace();
 					}
-	
-					// ................................... ends
-					// here..................................				
+				}
+				// =======================================================
+				// transfer the file
+
+				try {
+					productImage.transferTo(new File(filePath));
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+
+				// ................................... ends
+				// here..................................
 			}
-			
+
 		} else {
 			pDAO.update(product);
 		}
 		return "redirect:/admin/product";
 	}
-		
-	}
-	
 
+}

@@ -123,7 +123,14 @@ public class JspController {
 		ModelAndView mv = new ModelAndView("cart");
 		mv.addObject("Hi!!", "My E-Commerce Website");
 		return mv;
-	}	
+	}
+	
+	@RequestMapping(value = { "/logout" })
+	public ModelAndView logou() {
+		ModelAndView mv = new ModelAndView("logout");
+		mv.addObject("Hi!!", "My E-Commerce Website");
+		return mv;
+	}
 	
 }
 

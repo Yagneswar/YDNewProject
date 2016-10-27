@@ -26,13 +26,17 @@ public class UserController {
 		model.addAttribute("user", new User());
 		return "reg";
 	}
-
+    
 	@PostMapping(value = "/in")
-	public String go(@ModelAttribute ("user") User user1,BindingResult bindingResult, Model model){
-		
+	public String go(@Valid @ModelAttribute ("user") User user1,BindingResult bindingResult, Model model){
+		if(bindingResult.hasErrors())
+		{
+			model.addAttribute("user", new User());
+			return "reg";
+		}
 		
 		r.insertUser(user1);	
 		
-		return "/login";
+		return "redirect:/";
 	}
 }

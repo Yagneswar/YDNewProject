@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+ <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <c:set var="bt" value="/resources/css">
 </c:set>
 <link rel="stylesheet" href="<c:url value="${bt}/bootstrap.css"/>" />
@@ -14,12 +15,22 @@
 			<li><a href="<c:url value="/"/>">Home</a></li>
 			<li><a href="<c:url value="/aboutus"/>">About US</a></li>
 			<li><a href="<c:url value="/contactus"/>">Contact US</a></li>
-
+   
+            
             <li><a href="<c:url value="/reg"/>">Register</a></li>
+            			     
+            
 			<li><a href="<c:url value="/login"/>">Login</a></li>
+			
 			<li><a href="<c:url value="/viewdetails"/>">View All</a></li>
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
 			<li><a href="<c:url value="admin/product"/>">Admin</a></li>
-			<li><a href="<c:url value="/cart"/>">CheckOut</a></li>	
+			</sec:authorize>
+			<li><a href="<c:url value="/cart"/>">Cart</a></li>	
+			
+			 <sec:authorize access="isAuthenticated()">
+						<li><a href="<c:url value="/logout"/>">LogOut</a></li>
+			             </sec:authorize>
 			
 			
 		</ul>
